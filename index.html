@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEDiLEAD | 逆転管理塾</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #122040;
+    --navy-light: #1e3a6e;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e6b8;
+    --white: #ffffff;
+    --off-white: #f8f6f0;
+    --gray: #8a9ab5;
+    --light-gray: #e8ecf4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(10, 22, 40, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .logo span { color: var(--white); font-weight: 300; }
+
+  nav { display: flex; gap: 36px; }
+  nav a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+    letter-spacing: 2px;
+    font-weight: 500;
+    transition: color .3s;
+    position: relative;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width .3s;
+  }
+  nav a:hover { color: var(--gold); }
+  nav a:hover::after { width: 100%; }
+
+  /* ── HERO ── */
+  #top {
+    position: relative;
+    height: 100vh;
+    min-height: 680px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(10,22,40,0.15) 0%,
+      rgba(10,22,40,0.3) 40%,
+      rgba(10,22,40,0.75) 70%,
+      rgba(10,22,40,1) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 72px 80px;
+    max-width: 780px;
+    animation: fadeUp .9s ease both;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(30px, 4.5vw, 54px);
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    line-height: 2;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 36px;
+    max-width: 560px;
+    font-weight: 300;
+  }
+
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .pill {
+    background: rgba(201, 168, 76, 0.15);
+    border: 1px solid rgba(201, 168, 76, 0.5);
+    color: var(--gold-light);
+    padding: 7px 18px;
+    border-radius: 2px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 18px 48px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background .3s, transform .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.15);
+    transform: translateX(-100%);
+    transition: transform .3s;
+  }
+  .cta-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .cta-btn:hover::after { transform: translateX(0); }
+
+  .cta-note {
+    margin-top: 12px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 1px;
+  }
+
+  /* ── MERIT STRIP ── */
+  .merit-strip {
+    background: rgba(201, 168, 76, 0.08);
+    border-top: 1px solid rgba(201, 168, 76, 0.25);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.25);
+    padding: 52px 72px;
+  }
+
+  .merit-strip h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 36px;
+    text-align: center;
+  }
+
+  .merit-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+
+  .merit-item {
+    text-align: center;
+    padding: 24px 16px;
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    background: rgba(255,255,255,0.02);
+    transition: border-color .3s, background .3s;
+  }
+  .merit-item:hover {
+    border-color: rgba(201, 168, 76, 0.6);
+    background: rgba(201, 168, 76, 0.06);
+  }
+  .merit-item .icon {
+    font-size: 22px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .merit-item p {
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.8);
+    font-weight: 300;
+  }
+
+  /* ── SECTION COMMON ── */
+  section {
+    padding: 100px 72px;
+  }
+
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(26px, 3vw, 40px);
+    font-weight: 700;
+    line-height: 1.5;
+    color: var(--white);
+    margin-bottom: 60px;
+  }
+
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 20px 0 48px;
+  }
+
+  /* ── INSTRUCTOR ── */
+  #instructor {
+    background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  #instructor::before {
+    content: 'MEDiLEAD';
+    position: absolute;
+    right: -20px; top: 40px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 160px;
+    font-weight: 300;
+    color: rgba(201, 168, 76, 0.04);
+    letter-spacing: 10px;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .instructor-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .instructor-story {
+    font-size: 15px;
+    line-height: 2.2;
+    color: rgba(255,255,255,0.8);
+    font-weight: 300;
+  }
+
+  .instructor-story strong {
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+
+  .instructor-story p { margin-bottom: 20px; }
+
+  .profile-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201, 168, 76, 0.25);
+    padding: 44px;
+    position: sticky;
+    top: 100px;
+  }
+
+  .profile-name {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .profile-title {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+
+  .profile-highlight {
+    background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.04));
+    border-left: 2px solid var(--gold);
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    font-size: 13.5px;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.85);
+    font-weight: 300;
+  }
+
+  .schools-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .school-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .school-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 300;
+  }
+
+  .school-list li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border: 1px solid var(--gold);
+    flex-shrink: 0;
+    transform: rotate(45deg);
+  }
+
+  .features-list {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .feature-tag {
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 8px 12px;
+    font-size: 11.5px;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  /* ── SERVICES ── */
+  #services {
+    background: var(--off-white);
+    color: var(--navy);
+  }
+
+  #services .section-label { color: var(--navy-light); }
+  #services .section-title { color: var(--navy); }
+  #services .divider { background: var(--navy-light); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 80px;
+  }
+
+  .service-card {
+    background: var(--white);
+    padding: 44px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .3s;
+  }
+  .service-card:hover { transform: translateY(-4px); }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--navy-light);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .3s;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--light-gray);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .service-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 14px;
+  }
+
+  .service-desc {
+    font-size: 13.5px;
+    line-height: 2;
+    color: #5a6a80;
+    font-weight: 300;
+  }
+
+  /* ── COMPARISON ── */
+  .comparison-section {
+    background: var(--off-white);
+    padding-top: 0;
+  }
+
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3px;
+  }
+
+  .comp-card {
+    padding: 40px 36px;
+    background: var(--white);
+  }
+
+  .comp-card.highlight {
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .comp-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  .comp-card:not(.highlight) .comp-label { color: #aaa; }
+  .comp-card.highlight .comp-label { color: var(--gold); }
+
+  .comp-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .comp-card:not(.highlight) .comp-title { color: #888; text-decoration: line-through; }
+  .comp-card.highlight .comp-title { color: var(--gold-light); }
+
+  .comp-desc {
+    font-size: 13px;
+    line-height: 2;
+    font-weight: 300;
+  }
+
+  .comp-card:not(.highlight) .comp-desc { color: #888; }
+  .comp-card.highlight .comp-desc { color: rgba(255,255,255,0.8); }
+
+  /* ── PLANS ── */
+  #plans {
+    background: var(--navy-mid);
+  }
+
+  .plans-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+
+  .plan-card {
+    border: 1px solid rgba(201,168,76,0.25);
+    padding: 48px 44px;
+    position: relative;
+    transition: border-color .3s;
+  }
+  .plan-card:hover { border-color: rgba(201,168,76,0.7); }
+
+  .plan-card.featured {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .plan-badge {
+    position: absolute;
+    top: -1px; right: 32px;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 6px 16px;
+  }
+
+  .plan-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .plan-price {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+
+  .plan-unit {
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  .plan-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+
+  .plan-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .plan-features li::before {
+    content: '✓';
+    color: var(--gold);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .plan-features li.disabled {
+    color: rgba(255,255,255,0.25);
+  }
+  .plan-features li.disabled::before {
+    content: '–';
+    color: rgba(255,255,255,0.2);
+  }
+
+  .option-box {
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 36px 44px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .option-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .option-sub {
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+
+  .subjects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .subject-tag {
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 7px 16px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+  }
+
+  /* ── FAQ ── */
+  #faq {
+    background: var(--navy);
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .faq-list {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .faq-item {
+    border: 1px solid rgba(201,168,76,0.15);
+    overflow: hidden;
+  }
+
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 24px 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    transition: background .2s;
+  }
+  .faq-q:hover { background: rgba(201,168,76,0.05); }
+
+  .faq-q-text {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1.6;
+  }
+
+  .faq-icon {
+    color: var(--gold);
+    font-size: 20px;
+    flex-shrink: 0;
+    transition: transform .3s;
+    font-weight: 300;
+  }
+
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s ease;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .faq-item.open .faq-a { max-height: 600px; }
+
+  .faq-a-inner {
+    padding: 0 28px 28px;
+    font-size: 14px;
+    line-height: 2.1;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+  }
+
+  .faq-a-inner ul {
+    margin-top: 12px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .faq-a-inner ul li {
+    padding-left: 16px;
+    position: relative;
+  }
+  .faq-a-inner ul li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 10px;
+    top: 3px;
+  }
+
+  /* ── CTA FOOTER ── */
+  .cta-section {
+    background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-light) 100%);
+    padding: 100px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%);
+  }
+
+  .cta-section h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .cta-section p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 48px;
+    font-weight: 300;
+    position: relative;
+  }
+
+  footer {
+    background: rgba(0,0,0,0.5);
+    padding: 24px 72px;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 2px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    header { padding: 16px 24px; }
+    nav { gap: 20px; }
+    .hero-content { padding: 0 24px 60px; }
+    section { padding: 70px 24px; }
+    .merit-strip { padding: 40px 24px; }
+    .merit-grid { grid-template-columns: repeat(2, 1fr); }
+    .instructor-layout { grid-template-columns: 1fr; gap: 40px; }
+    .profile-card { position: static; }
+    .services-grid { grid-template-columns: 1fr; }
+    .comparison-grid { grid-template-columns: 1fr; }
+    .plans-grid { grid-template-columns: 1fr; }
+    .features-list { grid-template-columns: 1fr; }
+    .cta-section { padding: 70px 24px; }
+    footer { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="#top" class="logo">MEDi<span>LEAD</span></a>
+  <nav>
+    <a href="#top">TOP</a>
+    <a href="#instructor">講師紹介</a>
+    <a href="#services">サービス内容</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="top">
+  <img class="hero-img" src="/mnt/user-data/uploads/1778958104947_image.png" alt="MEDiLEAD Hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">逆転管理塾 MEDiLEAD</p>
+    <h1 class="hero-title">
+      現役医学生が、<br>
+      合格まで365日フル伴走。<br>
+      天才に勝つ<em>"逆転管理塾"</em>
+    </h1>
+    <p class="hero-sub">
+      実力を正確に把握し、最短ルートのロードマップ作成 × 365日の進捗管理 × 戦略×勉強法の徹底指導。「必ず伸びる環境」をオンラインで提供。
+    </p>
+    <div class="hero-pills">
+      <span class="pill">最短ルートが分かる</span>
+      <span class="pill">毎日やるべきことが明確に</span>
+      <span class="pill">現役医学生がサポート</span>
+      <span class="pill">オンライン完結</span>
+    </div>
+    <a href="#faq" class="cta-btn">＼ 無料ロードマップ作成会に参加する ／</a>
+    <p class="cta-note">※ 売り込みは一切しません。あなたの現状と課題を一緒に整理する時間です。</p>
+  </div>
+</section>
+
+<!-- MERIT STRIP -->
+<div class="merit-strip reveal">
+  <h2>MEDiLEADで手に入るもの</h2>
+  <div class="merit-grid">
+    <div class="merit-item">
+      <span class="icon">🗺</span>
+      <p>最短の合格までのロードマップが分かる</p>
+    </div>
+    <div class="merit-item">
+      <span class="icon">📋</span>
+      <p>毎日やるべき勉強が分かる</p>
+    </div>
+    <div class="merit-item">
+      <span class="icon">💪</span>
+      <p>モチベーション・メンタルも現役医学生がサポート</p>
+    </div>
+    <div class="merit-item">
+      <span class="icon">🧠</span>
+      <p>受験だけで終わらない"本質的な勉強法"が身につく</p>
+    </div>
+    <div class="merit-item">
+      <span class="icon">📱</span>
+      <p>オンライン完結で、どこからでも受講可能</p>
+    </div>
+  </div>
+</div>
+
+<!-- INSTRUCTOR -->
+<section id="instructor">
+  <div class="section-label">Instructor</div>
+  <h2 class="section-title">講師紹介</h2>
+  <div class="divider"></div>
+
+  <div class="instructor-layout">
+    <div class="instructor-story reveal">
+      <p>かつての僕は、<strong>"勉強のやり方を一切知らないまま、ただがむしゃらに努力していた"</strong>受験生でした。</p>
+      <p>中学時代の通知表は2ばかり。模試の偏差値は40前半。偏差値52の高校ですら「厳しい」と言われていました。どれだけ勉強しても伸びない。周りからは笑われる。本当に悔しかった。</p>
+      <p>だから僕は、勉強法を徹底的に研究しました。本を読み漁り、実際に試し、失敗し、また修正する。それを何年も繰り返す中で、ようやく見えてきたものがあります。</p>
+      <p><strong>「必ず成績を伸ばすために必要なもの」</strong></p>
+      <p>伸びなかった時期が長かったからこそ、僕は誰より深く理解しています。なぜ伸びないのか、どの勉強法が意味を持たないのか、本当に必要な勉強とは何か。</p>
+      <p>僕は天才ではありませんでした。でも高校では、周囲から「神童」と呼ばれるようになった。それは才能ではなく、<strong>"本質的な勉強法"を知ったから。</strong></p>
+      <p>その思いで、逆転管理塾 MEDiLEAD を立ち上げました。</p>
+    </div>
+
+    <div class="profile-card reveal">
+      <p class="profile-name">塾長 せい</p>
+      <p class="profile-title">難関大医学部医学科 / MEDiLEAD 代表</p>
+      <div class="profile-highlight">
+        偏差値40台から、超難関大学医学部医学科に逆転合格。勉強法・計画・管理の専門家。
+      </div>
+
+      <p class="schools-title">INSTRUCTOR LINE-UP</p>
+      <ul class="school-list">
+        <li>東京大学 理科三類</li>
+        <li>東京科学大学 医学部医学科</li>
+        <li>東京慈恵会医科大学 医学部医学科</li>
+        <li>慶應義塾大学 医学部医学科</li>
+        <li>千葉大学 医学部医学科</li>
+      </ul>
+
+      <div class="features-list">
+        <div class="feature-tag">ロードマップ作成</div>
+        <div class="feature-tag">365日管理</div>
+        <div class="feature-tag">週1戦略会議</div>
+        <div class="feature-tag">勉強法の矯正</div>
+        <div class="feature-tag">メンタルサポート</div>
+        <div class="feature-tag">オンライン完結</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label" style="color: var(--navy-light);">Services</div>
+  <h2 class="section-title" style="color: var(--navy);">サービス内容</h2>
+  <div class="divider" style="background: var(--navy-light);"></div>
+  <p style="color: #5a6a80; font-size: 15px; margin-bottom: 52px; font-weight: 300; line-height: 2;">
+    — 365日、あなたの勉強を"逆転仕様"に最適化する —
+  </p>
+
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-title">完全ロードマップ作成</div>
+      <p class="service-desc">あなたの学力・生活・目標を徹底分析し、最短で合格するための専用ルートを作成。</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-title">365日の徹底管理（毎日）</div>
+      <p class="service-desc">現役医学生が毎日進捗をチェックし、サボれない・迷わない環境を提供。</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-title">週1回45分の戦略会議</div>
+      <p class="service-desc">理解度・進捗・模試結果をもとに、最短ルートからズレないように軌道修正。</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-title">本質的な勉強法の指導</div>
+      <p class="service-desc">参考書を"こなす"のではなく、理解の質を上げる勉強法を指導。</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-title">科目ごとの本質的指導</div>
+      <p class="service-desc">数学：構造理解 / 英語：読解の型 / 理科：因果関係 / 国語：論理 / 社会：つながり理解</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-title">メンタル・モチベーションサポート</div>
+      <p class="service-desc">不安・焦り・スランプを現役医学生が支える。全国どこからでもオンライン完結で受講可能。</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<div class="comparison-section" style="background: var(--off-white); padding: 0 72px 100px;">
+  <div class="section-label" style="color: var(--navy-light); padding-top: 0;">Difference</div>
+  <h2 class="section-title" style="color: var(--navy);">他塾との決定的な違い</h2>
+  <div class="divider" style="background: var(--navy-light);"></div>
+
+  <div class="comparison-grid reveal">
+    <div class="comp-card">
+      <p class="comp-label">一般の塾</p>
+      <p class="comp-title">計画任せ・管理なし</p>
+      <p class="comp-desc">授業を受けるだけで、その後の管理は生徒任せ。計画の重要性が軽視されがち。</p>
+    </div>
+    <div class="comp-card highlight">
+      <p class="comp-label">MEDiLEAD</p>
+      <p class="comp-title">完全伴走型サポート</p>
+      <p class="comp-desc">「立てる・管理する・修正する」まで徹底。計画を365日フォローアップ。</p>
+    </div>
+    <div class="comp-card">
+      <p class="comp-label">一般の塾</p>
+      <p class="comp-title">テクニック重視の表面指導</p>
+      <p class="comp-desc">ノート術や暗記術など小手先のテクニックばかり。本質的な理解力が育ちにくい。</p>
+    </div>
+    <div class="comp-card highlight">
+      <p class="comp-label">MEDiLEAD</p>
+      <p class="comp-title">理解の質を上げる本質指導</p>
+      <p class="comp-desc">「どれだけ理解したか」「どう理解すべきか」まで具体的に指導。根本から変える。</p>
+    </div>
+    <div class="comp-card">
+      <p class="comp-label">一般の塾</p>
+      <p class="comp-title">アルバイト講師に依存</p>
+      <p class="comp-desc">指導品質にバラつきが出やすく、受験を知り尽くした指導とは言えないことも。</p>
+    </div>
+    <div class="comp-card highlight">
+      <p class="comp-label">MEDiLEAD</p>
+      <p class="comp-title">日本トップ医学生による指導</p>
+      <p class="comp-desc">東大理三・慶應医など精鋭医学生が直接伴走。最高レベルの指導を全国へ。</p>
+    </div>
+  </div>
+</div>
+
+<!-- PLANS -->
+<section id="plans">
+  <div class="section-label">Plans</div>
+  <h2 class="section-title">料金プラン</h2>
+  <div class="divider"></div>
+  <p style="color: var(--gray); font-size: 13px; margin-bottom: 52px; font-weight: 300;">入塾金：10,000円（初回のみ）</p>
+
+  <div class="plans-grid reveal">
+    <div class="plan-card">
+      <p class="plan-name">BASIC PLAN</p>
+      <p class="plan-price">¥24,800</p>
+      <p class="plan-unit">/ 月額</p>
+      <p style="font-size:13px; color: rgba(255,255,255,0.6); margin-bottom: 28px; font-weight: 300;">必要なサポートを"無駄なく"受けたい方向け</p>
+      <ul class="plan-features">
+        <li>完全ロードマップ作成</li>
+        <li>毎日の進捗管理</li>
+        <li>勉強法の徹底指導</li>
+        <li>週1回45分の戦略会議</li>
+        <li class="disabled">LINE進捗管理（随時）</li>
+        <li class="disabled">LINE質問し放題</li>
+      </ul>
+      <a href="#faq" class="cta-btn" style="display: block; text-align: center;">無料相談に申し込む</a>
+    </div>
+
+    <div class="plan-card featured">
+      <div class="plan-badge">人気 No.1</div>
+      <p class="plan-name">STANDARD PLAN</p>
+      <p class="plan-price">¥49,800</p>
+      <p class="plan-unit">/ 月額</p>
+      <p style="font-size:13px; color: rgba(255,255,255,0.6); margin-bottom: 28px; font-weight: 300;">"分からない"を即解決し、逆転速度を最大化</p>
+      <ul class="plan-features">
+        <li>完全ロードマップ作成</li>
+        <li>毎日の進捗管理</li>
+        <li>勉強法の徹底指導</li>
+        <li>週1回45分の戦略会議</li>
+        <li>LINE進捗管理（随時）</li>
+        <li>LINE質問し放題</li>
+      </ul>
+      <a href="#faq" class="cta-btn" style="display: block; text-align: center;">無料相談に申し込む</a>
+    </div>
+  </div>
+
+  <div class="option-box reveal">
+    <p class="option-title">授業オプション（必要な人だけ追加）</p>
+    <p class="option-sub">週1回 1時間：5,000円〜</p>
+    <div class="subjects">
+      <div class="subject-tag">数学：構造理解</div>
+      <div class="subject-tag">英語：読解の型</div>
+      <div class="subject-tag">理科：因果関係</div>
+      <div class="subject-tag">国語：論理</div>
+      <div class="subject-tag">社会：つながり理解</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-label">FAQ</div>
+  <h2 class="section-title">よくある質問</h2>
+  <div class="divider"></div>
+
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Q1. 本当に成績は伸びますか。</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          はい。MEDiLEADは"管理 × 戦略 × 本質的勉強法"に特化しているため、他塾や自己流で伸びなかった生徒でも確実に改善します。<ul><li>毎日の進捗管理</li><li>週1の戦略会議</li><li>本質的な勉強法の指導</li><li>LINE質問で疑問を即解決</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Q2. 医学部志望じゃなくても大丈夫ですか。</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          もちろん大丈夫です。MEDiLEADは「医学部専門」ではなく「本質的な勉強法 × 365日管理」の塾です。国公立・難関大・中堅大・高校受験・定期テスト対策など、どのレベルでも対応しています。むしろ医学部以外の生徒の方が効果が出やすいです。
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Q3. 部活や学校と両立できますか。</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          できます。むしろ、両立している生徒の方が多いです。ロードマップも進捗管理も、生活リズムに合わせて最適化するので、無理なく続けられます。
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Q4. オンラインでも本当に大丈夫ですか。</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          問題ありません。オンラインの方が毎日の管理・即時修正・LINE質問・戦略会議がスムーズにでき、対面より密度の高いサポートが可能です。
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Q5. どんな生徒が向いていますか。</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          以下のどれかに当てはまるなら、確実に伸びます。<ul><li>勉強のやり方が分からない</li><li>何をどれだけやればいいか迷う</li><li>自己流で伸びない</li><li>計画が続かない</li><li>部活と両立したい</li><li>本質的な勉強法を身につけたい</li></ul>逆に「授業だけ受けて満足するタイプ」は向きません。
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Q6. どのくらいの期間続ければ効果が出ますか。</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          最短で1〜2ヶ月で変化が出ます。本質的な勉強法が身につくと、その後は加速度的に伸びます。
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Q7. 途中で辞めることはできますか。</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          はい、月額制なのでいつでも可能です。違約金などはありません。
+        </div>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">Q8. ロードマップ作成会では何をしますか。</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <div class="faq-a-inner">
+          <ul><li>現状の分析</li><li>伸びない原因の特定</li><li>合格までのロードマップ作成</li><li>今後の勉強の優先順位</li><li>生活リズムの最適化</li></ul>無理な売り込み・勧誘はいたしませんのでご安心ください。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<div class="cta-section">
+  <h2>まず、あなたの現状を一緒に整理しましょう。</h2>
+  <p>無料ロードマップ作成会では、売り込みは一切しません。<br>あなたの課題と最短の合格ルートを、現役医学生と一緒に考える時間です。</p>
+  <a href="#" class="cta-btn" style="font-size: 16px; padding: 20px 60px;">＼ 無料ロードマップ作成会に参加する ／</a>
+</div>
+
+<footer>
+  © 2025 MEDiLEAD — 逆転管理塾
+</footer>
+
+<script>
+  // FAQ toggle
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
